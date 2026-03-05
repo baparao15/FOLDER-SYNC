@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folder Sync Application</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="header-content">
+                <h1 class="title">
+                    <svg class="icon-sync" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2" />
+                    </svg>
+                    Folder Sync Application
+                </h1>
+                <div class="status-badge" id="statusBadge">
+                    <span class="status-dot"></span>
+                    <span id="statusText">Initializing...</span>
+                </div>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <!-- Role Selection Screen (shown initially) -->
+            <section class="card role-selection" id="roleSelection">
+                <h2 class="card-title">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="M12 6v6l4 2" />
+                    </svg>
+                    Select Your Role
+                </h2>
+                <p class="help-text">Choose how you want to use this application</p>
+
+                <div class="role-options">
+                    <label class="role-card">
+                        <input type="radio" name="role" value="server" id="roleServer">
+                        <div class="role-content">
+                            <svg class="role-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="2" width="20" height="8" rx="2" ry="2" />
+                                <rect x="2" y="14" width="20" height="8" rx="2" ry="2" />
+                                <line x1="6" y1="6" x2="6.01" y2="6" />
+                                <line x1="6" y1="18" x2="6.01" y2="18" />
+                            </svg>
+                            <h3>Server Mode</h3>
+                            <p>Host files and accept connections from clients</p>
+                        </div>
+                    </label>
+
+                    <label class="role-card">
+                        <input type="radio" name="role" value="client" id="roleClient">
+                        <div class="role-content">
+                            <svg class="role-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2">
+                                <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                                <line x1="8" y1="21" x2="16" y2="21" />
+                                <line x1="12" y1="17" x2="12" y2="21" />
+                            </svg>
+                            <h3>Client Mode</h3>
+                            <p>Connect to a server and sync files</p>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="form-group">
+                    <label for="initialSyncFolder">Sync Folder Path</label>
+                    <input type="text" id="initialSyncFolder" placeholder="C:\Users\YourName\Desktop\sync"
+                        class="input">
+                    <small class="help-text">Folder to synchronize across devices</small>
+                </div>
+
+                <!-- Client-specific fields (hidden by default) -->
+                <div class="client-fields" id="clientFields" style="display: none;">
+                    <div class="form-group">
+                        <label for="serverIP">Server IP Address</label>
+                        <input type="text" id="serverIP" placeholder="192.168.1.100 or localhost" class="input">
+                        <small class="help-text">IP address of the server (use 'localhost' or '127.0.0.1' for same
+                            PC)</small>
+                    </div>
+                    <div class="form-group">
+                        <label for="serverPort">Server Port</label>
+                        <input type="number" id="serverPort" placeholder="8080" value="8080" class="input">
+                        <small class="help-text">Port where the server is listening (default: 8080)</small>
+                    </div>
+                </div>
+
+                <button onclick="startSync()" class="btn btn-primary btn-large" id="startBtn" disabled>
+                    <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polygon points="5 3 19 12 5 21 5 3" />
+                    </svg>
+                    Start Sync
+                </button>
+            </section>
+            <br>
+            <!-- Main Interface (hidden initially) -->
+            <div id="mainInterface" style="display: none;">
+                <!-- Configuration Section -->
+                <section class="card">
+                    <h2 class="card-title">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" />
+                            <polyline points="9 22 9 12 15 12 15 22" />
+                        </svg>
+                        Configuration
+                    </h2>
+                    <div class="form-group">
+                        <label for="syncFolder">Sync Folder Path</label>
+                        <div class="input-group">
+                            <input type="text" id="syncFolder" placeholder="C:\Users\YourName\Desktop\sync"
+                                class="input">
+                            <button onclick="updateConfig()" class="btn btn-primary">
+                                <svg class="icon-sm" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2">
+                                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                                    <polyline points="17 21 17 13 7 13 7 21" />
+                                    <polyline points="7 3 7 8 15 8" />
+                                </svg>
+                                Update
+                            </button>
+                        </div>
+                        <small class="help-text">Current sync folder location</small>
+                    </div>
+                    <div class="mode-indicator">
+                        <strong>Mode:</strong> <span id="currentMode">-</span>
+                    </div>
+                </section>
+                <br>
+                <br>
+                <!-- Activity Log Section -->
+                <section class="card">
+                    <h2 class="card-title">
+                        <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+                            <polyline points="14 2 14 8 20 8" />
+                            <line x1="16" y1="13" x2="8" y2="13" />
+                            <line x1="16" y1="17" x2="8" y2="17" />
+                            <polyline points="10 9 9 9 8 9" />
+                        </svg>
+                        Activity Log
+                    </h2>
+                    <div class="log-container" id="logContainer">
+                        <div class="log-entry">System initialized</div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

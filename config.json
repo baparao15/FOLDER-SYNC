@@ -1,0 +1,11 @@
+{
+    "sync_folder": "C:\\Users\\YourName\\Desktop\\sync_folder",
+    "sync_interval_seconds": 3,
+    "log_level": "INFO",
+    "log_to_file": false,
+    "log_file_path": "sync.log",
+    "server_host": "localhost",
+    "server_port": 8080,
+    "web_server_port": 8888,
+    "auto_launch_browser": true
+}

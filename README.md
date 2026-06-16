@@ -200,14 +200,5 @@ Run two instances (pass a different web port to the second: `.\build\sync_app.ex
 
 ---
 
-## Resume Bullet Points
-
-> Built a real-time bidirectional file-synchronization tool in C++17 using raw TCP sockets (Winsock2) and multithreading, implementing a producer-consumer architecture with mutex-protected queues and condition variables to safely coordinate three concurrent threads.
-
-> Designed and implemented a client-server folder sync application in C++ featuring an embedded HTTP web dashboard (cpp-httplib), configurable JSON settings, and automatic change detection via filesystem snapshot diffing, achieving sub-5-second propagation of create, update, and delete events across machines.
-
-> Applied core operating systems concepts — process synchronization, inter-process communication, and concurrent file-system monitoring — to build a networked directory synchronizer in C++17 that maintains consistent state between a server and client over a persistent TCP connection.
-
----
 
 *Developed as an Operating Systems course project.*
